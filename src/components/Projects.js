@@ -1,8 +1,10 @@
-import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { ProjectCard } from "./ProjectCard";
-import projImg1 from "../assets/img/project-img1.png";
-import projImg2 from "../assets/img/project-img2.png";
-import projImg3 from "../assets/img/project-img3.png";
+import projImg1 from "../assets/img/1.png";
+import projImg2 from "../assets/img/2.png";
+import projImg3 from "../assets/img/3.png";
+import projImg4 from "../assets/img/4.png";
+import projImg5 from "../assets/img/5.png";
 import colorSharp2 from "../assets/img/color-sharp2.png";
 import "animate.css";
 import TrackVisibility from "react-on-screen";
@@ -11,97 +13,87 @@ export const Projects = () => {
   const projects = [
     {
       title: "AI_NEWS Project",
-      description: "Design & Development",
+      description:
+        "AI_News Application that provides news from diffrent sources and topics from voice search with help of Alan_AI",
       imgUrl: projImg1,
       codeLink: "https://github.com/amandekate/ai_news_project",
       visitLink: "https://ai-news-app-by-aman.netlify.app/",
+      tags: ["#React", "#ALAN", "#News-Api", "#Alan-Api"],
     },
     {
-      title: "Dall-E Clone",
-      description: "Design & Development",
+      title: "Dall-E 2.0",
+      description:
+        "OpenAI's DALL-E model: A deep learning model that generates images from text input",
       imgUrl: projImg2,
       codeLink: "https://github.com/amandekate/dall_e",
       visitLink: "https://dall-e-fe-amandekate.vercel.app/",
+      tags: ["#React", "#Node", "#Express", "#MongoDb", "#OpenAi"],
     },
     {
-      title: "Business Startup",
-      description: "Design & Development",
+      title: "Dashboard App",
+      description:
+        "React Admin Dashboard Application : This Admin Panel includes one Dashboard, Three Pages, Four Apps, and Seven fully functional charts!     ",
       imgUrl: projImg3,
+      codeLink: "https://github.com/amandekate/dashboard",
+      visitLink: "https://dashboard-amandekate.vercel.app/",
+      tags: ["#React", "#tailwind", "#Syncfusion"],
+    },
+    {
+      title: "Ai Image Genration App {Kandinsky Modal}",
+      description:
+        "Ai Image genration application based on Kandinsky Modal 2.0 with Replicate Api ",
+      imgUrl: projImg4,
+      codeLink: "https://github.com/amandekate/kandinsky",
+      visitLink: "https://kandinsky-livid.vercel.app/",
+      tags: ["#NextJs", "#Tailwind", "#Replicate"],
+    },
+    {
+      title: "TechNotes Application",
+      description:
+        "techNotes App build with Mern Stack with has admin , manager and employee dashboards.",
+      imgUrl: projImg5,
+      codeLink: "https://github.com/amandekate/technotes_app",
+      visitLink: "https://technotes-8p5o.onrender.com/",
+      tags: ["React", "#redux", "#mongoDb", "#jwt"],
     },
   ];
 
   return (
-    <section className="project" id="project">
-      <Container>
-        <Row>
-          <Col size={12}>
-            <TrackVisibility>
-              {({ isVisible }) => (
-                <div
-                  className={
-                    isVisible ? "animate__animated animate__slideInUp" : ""
-                  }
-                >
-                  <h2>Projects</h2>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book.
-                  </p>
-                  <Tab.Container id="projects-tabs" defaultActiveKey="first">
-                    <Nav
-                      variant="pills"
-                      className="nav-pills mb-5 justify-content-center align-items-center"
-                      id="pills-tab"
-                    >
-                      <Nav.Item>
-                        <Nav.Link eventKey="first">Tab 1</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="second">Tab 2</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="third">Tab 3</Nav.Link>
-                      </Nav.Item>
-                    </Nav>
-                    <Tab.Content
-                      id="slideInUp"
-                      className={
-                        isVisible ? "animate__animated animate__slideInUp" : ""
-                      }
-                    >
-                      <Tab.Pane eventKey="first">
-                        <Row>
-                          {projects.slice(0, 2).map((project, index) => {
-                            return <ProjectCard key={index} {...project} />;
-                          })}
-                        </Row>
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="second">
-                        <Row>
-                          {projects.slice(2, 4).map((project, index) => {
-                            return <ProjectCard key={index} {...project} />;
-                          })}
-                        </Row>
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="third">
-                        <Row>
-                          {projects.slice(4, 6).map((project, index) => {
-                            return <ProjectCard key={index} {...project} />;
-                          })}
-                        </Row>
-                      </Tab.Pane>
-                    </Tab.Content>
-                  </Tab.Container>
-                </div>
-              )}
-            </TrackVisibility>
-          </Col>
-        </Row>
-      </Container>
-      <img className="background-image-right" src={colorSharp2}></img>
+    <section className="project" id="projects">
+      <div className="proj-bx">
+        <Container>
+          <Row>
+            <Col size={12}>
+              <TrackVisibility>
+                {({ isVisible }) => (
+                  <div
+                    className={
+                      isVisible ? "animate__animated animate__slideInUp" : ""
+                    }
+                  >
+                    <h2>Projects</h2>
+                    <br />
+                    <Row>
+                      {projects.map((project, index) => {
+                        return (
+                          <Col md={6} key={index}>
+                            <ProjectCard {...project} />
+                          </Col>
+                        );
+                      })}
+                    </Row>
+                  </div>
+                )}
+              </TrackVisibility>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+      <img
+        className="background-image-right"
+        src={colorSharp2}
+        alt="Background"
+      ></img>
     </section>
   );
 };

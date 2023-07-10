@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { ArrowRightCircle } from "react-bootstrap-icons";
 import headerImg from "../assets/img/header-img.svg";
 import "animate.css";
 import TrackVisibility from "react-on-screen";
+import ResumeDownload from "./Resume.js";
 
 export const Banner = () => {
   const [loopNum, setLoopNum] = useState(0);
@@ -54,18 +54,23 @@ export const Banner = () => {
               {({ isVisible }) => (
                 <div
                   className={
-                    isVisible ? "animate__animated animate__slideInLeft" : ""
+                    isVisible ? "animate__animated animate__fadeInLeft" : ""
                   }
                 >
                   <span className="tagline">Welcome to my Portfolio</span>
                   <h1>
-                    {`Hi I'm Aman `} <br></br> <span className="wrap">{text}</span>
+                    {`Hi I'm Aman `} <br></br>{" "}
+                    <span className="wrap">{text}</span>
                   </h1>
-                  <p> description..... here.....</p>
-                  <button onClick={() => console.log("connect")}>
-                    Let’s connect <ArrowRightCircle size={25} />
-                  </button>
+                  <p>
+                    Full Stack Developer looking for hands opportunity in
+                    designing, developing, and implementing applications and
+                    solutions using a range of technologies and programming
+                    languages. Seeking to leverage broad development
+                  </p>
+                  <ResumeDownload />
                 </div>
+                
               )}
             </TrackVisibility>
           </Col>

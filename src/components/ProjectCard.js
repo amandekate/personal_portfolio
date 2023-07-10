@@ -8,6 +8,7 @@ export const ProjectCard = ({
   imgUrl,
   codeLink,
   visitLink,
+  tags,
 }) => {
   return (
     <Col>
@@ -16,6 +17,8 @@ export const ProjectCard = ({
         <div className="proj-txtx">
           <h4>{title}</h4>
           <span>{description}</span>
+          <br></br>
+          <span className="proj-tag">{tags}</span>
           <div>
             <a
               className="icon-button"

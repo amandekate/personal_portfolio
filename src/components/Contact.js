@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Col, Container, Row, Modal, Button } from "react-bootstrap";
 import contactImg from "../assets/img/contact-img.svg";
+import { useFormspark } from "@formspark/use-formspark";
+
+const FORM_ID = process.env.REACT_APP_FORM_ID || "9GKdAddT";
 
 export const Contact = () => {
   const formInitialDetails = {
@@ -10,7 +13,9 @@ export const Contact = () => {
     phone: "",
     message: "",
   };
-
+  const [submit, submitting] = useFormspark({
+    formId: FORM_ID,
+  });
   const [formDetails, setFormDetails] = useState(formInitialDetails);
   const [buttonText, setButtonText] = useState("Send");
   const [status, setStatus] = useState({
@@ -25,38 +30,34 @@ export const Contact = () => {
       ...formDetails,
       [category]: value,
     });
-    console.log(formDetails);
-
   };
 
   const toggleModalShow = () => {
     setShowModal((prev) => !prev);
   };
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setButtonText("Sending...");
-    let response = await fetch("http://localhost:5000/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "Application/json;charset=utf-8",
-      },
-      body: JSON.stringify(formDetails),
-    });
-    setButtonText("Send");
-    let result = response.json();
-    setFormDetails(formInitialDetails);
-    if (result.code == 200) {
+    try {
+      const response = await submit(formDetails);
+      setButtonText("Send");
+      console.log(response);
       setStatus({ success: true, message: "Message sent successfully" });
-    } else {
+    } catch (error) {
       setStatus({
         success: false,
         message: "Something went wrong, please try again later.",
       });
+      console.log(error);
     }
   };
 
- 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    onFormUpdate(name, value);
+  };
+
   return (
     <>
       <button className="vvd" onClick={toggleModalShow}>
@@ -74,56 +75,55 @@ export const Contact = () => {
               </Col>
               <Col md={6}>
                 <h2>Get in Touch</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={onSubmit}>
                   <Row>
                     <Col sm={6} className="px-1">
                       <input
                         type="text"
-                        value={formDetails.firstName}
+                        name="firstName"
                         placeholder="First Name"
-                        onChange={(e) =>
-                          onFormUpdate("firstName", e.target.value)
-                        }
+                        value={formDetails.firstName}
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col sm={6} className="px-1">
                       <input
                         type="text"
-                        value={formDetails.lastName}
+                        name="lastName"
                         placeholder="Last Name"
-                        onChange={(e) =>
-                          onFormUpdate("lastName", e.target.value)
-                        }
+                        value={formDetails.lastName}
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col sm={6} className="px-1">
                       <input
                         type="email"
-                        value={formDetails.email}
+                        name="email"
                         placeholder="Email Address"
-                        onChange={(e) => onFormUpdate("email", e.target.value)}
+                        value={formDetails.email}
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col sm={6} className="px-1">
                       <input
                         type="tel"
-                        value={formDetails.phone}
+                        name="phone"
                         placeholder="Phone No."
-                        onChange={(e) => onFormUpdate("phone", e.target.value)}
+                        value={formDetails.phone}
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col>
                       <textarea
                         rows="6"
-                        value={formDetails.message}
+                        name="message"
                         placeholder="Message"
-                        onChange={(e) =>
-                          onFormUpdate("message", e.target.value)
-                        }
+                        value={formDetails.message}
+                        onChange={handleChange}
                       />
-                      <button type="submit">
+                      {/* <button type="submit">
                         <span>{buttonText}</span>
-                      </button>
+                      </button> */}
                     </Col>
                     {status.message && (
                       <Col>
@@ -148,8 +148,8 @@ export const Contact = () => {
           <Button variant="secondary" onClick={toggleModalShow}>
             Close
           </Button>
-          <Button variant="primary" onClick={toggleModalShow}>
-            Save Changes
+          <Button type="submit" onClick={onSubmit}>
+            <span>{buttonText}</span>
           </Button>
         </Modal.Footer>
       </Modal>
