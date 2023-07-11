@@ -95,5 +95,6 @@ export const Projects = () => {
         alt="Background"
       ></img>
     </section>
+    
   );
 };
